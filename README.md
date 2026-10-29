@@ -45,7 +45,7 @@ cd autohide-desktop-icons
 ./install.sh
 ```
 
-Das installiert nach `~/.local/bin/autohide-desktop-icons`, legt einen Autostart-Eintrag an und
+Das installiert nach `~/.local/bin/autohide-desktop-icons`, legt einen Menü- und Autostart-Eintrag an und
 startet das Tool. Deinstallieren: `./install.sh undo`
 
 ## Bekannte Themen
