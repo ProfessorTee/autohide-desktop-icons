@@ -1,40 +1,40 @@
 # AutoHide Desktop Icons
 
-**Blendet die Desktop-Icons unter KDE Plasma 6 aus, wenn du sie nicht brauchst.** Nach 1–5 Minuten
-ohne Maus- oder Tastatureingabe verschwinden die Icons und das Hintergrundbild bleibt frei. Ein
-Links- oder Rechtsklick auf den freien Desktop holt sie zurück.
+**English** · [Deutsch](README.de.md)
 
-## Bedienung
+**Hides the desktop icons on KDE Plasma 6 when you don't need them.** After 1–5 minutes without mouse or
+keyboard input the icons disappear and the wallpaper is clear. A left or right click on the empty desktop
+brings them back.
 
-Tray-Icon:
+## Usage
 
-- **Linksklick:** Icons sofort ein- oder ausblenden
-- **Rechtsklick:** Menü mit *Automatisch ausblenden* (an/aus), *Ausblenden nach* 1–5 min,
-  *Plasmashell neu starten* und *Beenden*
+Tray icon:
 
-Beim Beenden werden die Icons immer wieder eingeblendet.
+- **Left click:** show or hide the icons right away
+- **Right click:** menu with *auto-hide* (on/off), *hide after* 1–5 min, *restart Plasmashell* and *quit*
 
-## Wie es funktioniert
+The icons are always shown again when quitting. The tray menu is in German.
 
-- **Ausblenden:** Der Dateifilter der Ordneransicht wird per `plasmashell evaluateScript` auf ein Muster
-  gesetzt, das keine Datei trifft. Die Icon-Positionen bleiben erhalten, ein vorher gesetzter Filter wird
-  gemerkt und wiederhergestellt.
-- **Inaktivität:** Mäuse und Tastaturen werden per evdev gelesen. Tastendrücke zählen nur als
-  „Aktivität“ und werden nie gespeichert.
-- **Klick auf den Desktop:** Ein kurzes KWin-Skript prüft nach dem Klick, ob das aktive Fenster der
-  Desktop ist und unter dem Mauszeiger keine Leiste und kein Popup liegt.
+## How it works
 
-## Voraussetzungen
+- **Hiding:** the folder view's file filter is set via `plasmashell evaluateScript` to a pattern that
+  matches no file. Icon positions are kept; a filter set beforehand is remembered and restored.
+- **Inactivity:** mice and keyboards are read via evdev. Key presses only count as "activity" and are
+  never stored.
+- **Click on the desktop:** after a click, a short KWin script checks whether the active window is the
+  desktop and no panel or popup is under the mouse pointer.
 
-- KDE Plasma 6 (Wayland oder X11)
-- Python 3 mit `PySide6` und `python-evdev`
-- Benutzer in der Gruppe `input` (für evdev)
+## Requirements
+
+- KDE Plasma 6 (Wayland or X11)
+- Python 3 with `PySide6` and `python-evdev`
+- User in the `input` group (for evdev)
 
 Arch / CachyOS:
 
 ```sh
 sudo pacman -S --needed pyside6 python-evdev
-sudo usermod -aG input $USER   # danach neu anmelden
+sudo usermod -aG input $USER   # log in again afterwards
 ```
 
 ## Installation
@@ -45,15 +45,15 @@ cd autohide-desktop-icons
 ./install.sh
 ```
 
-Das installiert nach `~/.local/bin/autohide-desktop-icons`, legt einen Menü- und Autostart-Eintrag an und
-startet das Tool. Deinstallieren: `./install.sh undo`
+This installs to `~/.local/bin/autohide-desktop-icons`, adds a menu and autostart entry and starts the
+tool. Uninstall: `./install.sh undo`
 
-## Bekannte Themen
+## Known issues
 
-- Plasma verliert manchmal die Ordneransicht (Icons fehlen, obwohl kein Filter aktiv ist; im Journal
-  steht `FolderViewLayer.qml … Cannot read property 'model' of null`). Das ist ein Plasma-Fehler;
-  *Plasmashell neu starten* im Tray-Menü behebt es.
+- Plasma sometimes loses the folder view (icons missing although no filter is active; the journal shows
+  `FolderViewLayer.qml … Cannot read property 'model' of null`). This is a Plasma bug;
+  *restart Plasmashell* in the tray menu fixes it.
 
-## Lizenz
+## License
 
-MIT, siehe [LICENSE](LICENSE).
+MIT, see [LICENSE](LICENSE).
