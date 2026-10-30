@@ -13,7 +13,7 @@ Tray icon:
 - **Left click:** show or hide the icons right away
 - **Right click:** menu with *auto-hide* (on/off), *hide after* 1–5 min, *restart Plasmashell* and *quit*
 
-The icons are always shown again when quitting. The tray menu is in German.
+The icons are always shown again when quitting. The interface follows the system language: German on German systems, English otherwise.
 
 ## How it works
 

@@ -37,6 +37,14 @@ from PySide6.QtDBus import QDBusConnection, QDBusInterface
 from PySide6.QtGui import QAction, QActionGroup, QIcon
 from PySide6.QtWidgets import QApplication, QMenu, QSystemTrayIcon
 
+# German UI on a German system, English otherwise.
+DE = (os.environ.get("LC_ALL") or os.environ.get("LC_MESSAGES") or os.environ.get("LANG") or "").startswith("de")
+
+
+def t(de, en):
+    return de if DE else en
+
+
 MARKER = "autohide-desktop-icons-none"
 
 # Laeuft in plasmashell. Nur echte Desktops (Ordneransicht) mit Bildschirm.
@@ -139,11 +147,11 @@ class Tray:
         self.tray = QSystemTrayIcon()
         self.tray.activated.connect(lambda reason: reason == QSystemTrayIcon.Trigger and self.set_hidden(not self.hidden))
         menu = QMenu()
-        self.act_enabled = menu.addAction("Automatisch ausblenden")
+        self.act_enabled = menu.addAction(t("Automatisch ausblenden", "Auto-hide"))
         self.act_enabled.setCheckable(True)
         self.act_enabled.setChecked(self.settings.value("enabled", True, type=bool))
         self.act_enabled.toggled.connect(lambda on: self.settings.setValue("enabled", on))
-        sub = menu.addMenu("Ausblenden nach")
+        sub = menu.addMenu(t("Ausblenden nach", "Hide after"))
         group = QActionGroup(sub)
         for minutes in range(1, 6):
             act = sub.addAction(f"{minutes} min")
@@ -154,9 +162,9 @@ class Tray:
         menu.addSeparator()
         self.act_toggle = menu.addAction("", lambda: self.set_hidden(not self.hidden))
         # Plasma verliert manchmal die Ordneransicht (Icons weg trotz Filter aus) -> Neustart hilft
-        menu.addAction("Plasmashell neu starten",
+        menu.addAction(t("Plasmashell neu starten", "Restart Plasmashell"),
                        lambda: subprocess.Popen(["systemctl", "--user", "restart", "plasma-plasmashell.service"]))
-        menu.addAction("Beenden", app.quit)
+        menu.addAction(t("Beenden", "Quit"), app.quit)
         self.tray.setContextMenu(menu)
 
         self.set_hidden(False)  # Reste eines Absturzes aufraeumen
@@ -190,8 +198,8 @@ class Tray:
 
     def update_ui(self):
         self.tray.setIcon(QIcon.fromTheme("view-hidden" if self.hidden else "user-desktop"))
-        self.tray.setToolTip("Desktop-Icons " + ("ausgeblendet" if self.hidden else "sichtbar"))
-        self.act_toggle.setText("Icons einblenden" if self.hidden else "Icons ausblenden")
+        self.tray.setToolTip(t("Desktop-Icons ", "Desktop icons ") + (t("ausgeblendet", "hidden") if self.hidden else t("sichtbar", "visible")))
+        self.act_toggle.setText(t("Icons einblenden", "Show icons") if self.hidden else t("Icons ausblenden", "Hide icons"))
 
 
 def main():
@@ -200,7 +208,7 @@ def main():
     app.setApplicationDisplayName("AutoHide Desktop Icons")
     app.setQuitOnLastWindowClosed(False)
     if not QDBusConnection.sessionBus().isConnected():
-        sys.exit("Keine D-Bus-Session")
+        sys.exit(t("Keine D-Bus-Session", "No D-Bus session"))
     PROBE_FILE.write_text(KWIN_PROBE)
     tray = Tray(app)
     app.aboutToQuit.connect(lambda: plasma(JS_SHOW))  # Icons nie versteckt zuruecklassen

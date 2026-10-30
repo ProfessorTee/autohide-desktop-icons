@@ -14,7 +14,7 @@ Tray-Icon:
 - **Rechtsklick:** Menü mit *Automatisch ausblenden* (an/aus), *Ausblenden nach* 1–5 min,
   *Plasmashell neu starten* und *Beenden*
 
-Beim Beenden werden die Icons immer wieder eingeblendet.
+Beim Beenden werden die Icons immer wieder eingeblendet. Die Oberfläche folgt der Systemsprache: Deutsch auf deutschen Systemen, sonst Englisch.
 
 ## Wie es funktioniert
 

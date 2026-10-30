@@ -10,7 +10,7 @@ pkill -f autohide_desktop_icons.py 2>/dev/null || true
 pkill -f "$BIN" 2>/dev/null || true
 rm -f "$BIN" "$AUTOSTART" "$MENU"
 if [ "$1" = undo ]; then
-    echo "Entfernt."
+    echo "Removed."
     exit 0
 fi
 
@@ -20,7 +20,8 @@ cat > "$MENU" <<DESKTOP
 [Desktop Entry]
 Type=Application
 Name=AutoHide Desktop Icons
-Comment=Blendet Desktop-Icons nach Inaktivität aus, Klick auf den Desktop zeigt sie wieder
+Comment=Hides desktop icons after inactivity, a click on the desktop shows them again
+Comment[de]=Blendet Desktop-Icons nach Inaktivität aus, Klick auf den Desktop zeigt sie wieder
 Exec=$BIN
 Icon=user-desktop
 Categories=Utility;
@@ -28,4 +29,4 @@ X-KDE-autostart-after=panel
 DESKTOP
 cp "$MENU" "$AUTOSTART"
 setsid -f "$BIN" >/dev/null 2>&1
-echo "Installiert und gestartet (startet ab jetzt bei der Anmeldung)."
+echo "Installed and started (starts at login from now on)."
