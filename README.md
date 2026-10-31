@@ -27,13 +27,13 @@ The icons are always shown again when quitting. The interface follows the system
 ## Requirements
 
 - KDE Plasma 6 (Wayland or X11)
-- Python 3 with `PySide6` and `python-evdev`
+- Rust toolchain (`cargo`) to build
 - User in the `input` group (for evdev)
 
 Arch / CachyOS:
 
 ```sh
-sudo pacman -S --needed pyside6 python-evdev
+sudo pacman -S --needed rust
 sudo usermod -aG input $USER   # log in again afterwards
 ```
 

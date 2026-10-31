@@ -6,15 +6,17 @@ BIN="$HOME/.local/bin/autohide-desktop-icons"
 AUTOSTART="$HOME/.config/autostart/autohide-desktop-icons.desktop"
 MENU="$HOME/.local/share/applications/autohide-desktop-icons.desktop"
 
-pkill -f autohide_desktop_icons.py 2>/dev/null || true
-pkill -f "$BIN" 2>/dev/null || true
+pkill -f autohide_desktop_icons.py 2>/dev/null || true  # old Python version
+pkill -x autohide-deskto 2>/dev/null || true  # comm is cut to 15 chars
+pkill -f "python3 $BIN" 2>/dev/null || true
 rm -f "$BIN" "$AUTOSTART" "$MENU"
 if [ "$1" = undo ]; then
     echo "Removed."
     exit 0
 fi
 
-install -Dm755 "$(dirname "$0")/autohide_desktop_icons.py" "$BIN"
+cargo build --release --manifest-path "$(dirname "$0")/Cargo.toml"
+install -Dm755 "$(dirname "$0")/target/release/autohide-desktop-icons" "$BIN"
 mkdir -p "$(dirname "$AUTOSTART")" "$(dirname "$MENU")"
 cat > "$MENU" <<DESKTOP
 [Desktop Entry]

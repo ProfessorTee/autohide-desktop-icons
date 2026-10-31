@@ -29,13 +29,13 @@ Beim Beenden werden die Icons immer wieder eingeblendet. Die Oberfläche folgt d
 ## Voraussetzungen
 
 - KDE Plasma 6 (Wayland oder X11)
-- Python 3 mit `PySide6` und `python-evdev`
+- Rust-Toolchain (`cargo`) zum Bauen
 - Benutzer in der Gruppe `input` (für evdev)
 
 Arch / CachyOS:
 
 ```sh
-sudo pacman -S --needed pyside6 python-evdev
+sudo pacman -S --needed rust
 sudo usermod -aG input $USER   # danach neu anmelden
 ```
 
