@@ -6,6 +6,8 @@
 ohne Maus- oder Tastatureingabe verschwinden die Icons und das Hintergrundbild bleibt frei. Ein
 Links- oder Rechtsklick auf den freien Desktop holt sie zurück.
 
+<p align="center"><img src="screenshots/tray-menu.png" alt="Tray-Menü"></p>
+
 ## Bedienung
 
 Tray-Icon:

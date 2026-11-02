@@ -6,6 +6,8 @@
 keyboard input the icons disappear and the wallpaper is clear. A left or right click on the empty desktop
 brings them back.
 
+<p align="center"><img src="screenshots/tray-menu.png" alt="Tray menu"></p>
+
 ## Usage
 
 Tray icon:
