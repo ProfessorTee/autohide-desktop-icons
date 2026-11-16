@@ -270,6 +270,7 @@ fn main() {
     let handle = Tray { hidden, enabled: settings.enabled, timeout_min: settings.timeout_min, tx }.spawn().expect("tray");
     let (mut probe_at, mut refresh_at): (Option<Instant>, Option<Instant>) = (None, None);
     let mut check_at = Instant::now() + Duration::from_secs(2);
+    let mut state_at = Instant::now(); // while hidden: ask plasmashell only every 10 s
     let mut shown = (hidden, settings.enabled, settings.timeout_min); // what the tray displays
     while !STOP.load(Ordering::Relaxed) {
         let next = [probe_at, refresh_at, Some(check_at)].into_iter().flatten().min().unwrap();
@@ -306,7 +307,10 @@ fn main() {
         }
         if check_at <= now {
             check_at = now + Duration::from_secs(2);
-            refresh |= hidden; // evtl. extern wieder eingeblendet (Klick, Plasma-Neustart)
+            if hidden && state_at <= now {
+                state_at = now + Duration::from_secs(10);
+                refresh = true; // evtl. extern wieder eingeblendet (Klick, Plasma-Neustart)
+            }
             if !hidden && settings.enabled && idle() >= Duration::from_secs(settings.timeout_min * 60) {
                 set = Some(true);
             }
